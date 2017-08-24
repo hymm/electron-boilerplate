@@ -7,3 +7,4 @@ This is my boilerplate for using create-react-app with electron.
 * babel on main process
 * live reloading on main process
 * building using electron-builder
+* React dev tools
