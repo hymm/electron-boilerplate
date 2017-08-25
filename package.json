@@ -13,20 +13,44 @@
   "devDependencies": {
     "concurrently": "^3.5.0",
     "electron": "^1.7.5",
+    "electron-builder": "^19.24.1",
     "electron-devtools-installer": "^2.2.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.4",
+    "prettier": "^1.5.3",
     "react-app-rewired": "^1.2.1",
     "react-scripts": "1.0.11",
     "wait-on": "^2.0.2"
   },
   "scripts": {
+    "precommit": "lint-staged",
     "dev": "concurrently \"yarn react-start\" \"wait-on http://localhost:3000/ && yarn electron-dev\"",
     "electron-start": "electron .",
     "electron-dev": "node public/main/dev.js .",
     "react-start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepack": "yarn build",
+    "pack": "build --em.main=build/electron.js",
+    "release": "build --em.main=build/electron.js --publish=always"
+  },
+  "build": {
+    "appId": "com.appDev.appName",
+    "directories": {
+      "buildResources": "public"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --single-quote --write",
+      "git add"
+    ],
+    "public/main/**/*.{js,jsx,json,css}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
   },
   "homepage": "./",
-  "main": "public/main/start.js"
+  "main": "public/electron.js"
 }
